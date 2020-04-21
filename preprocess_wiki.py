@@ -8,6 +8,7 @@ d) Convert xml into txt file
 
 import sys
 import os
+import argparse
 import logging
 import wget
 import jieba
@@ -42,8 +43,16 @@ def preprocess_wiki(input_file, output_file):
     output.close()
     logging.info('Done')
 
-if __name__ == '__main__':
+def main():
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s %(levelname)s %(message)s')
-    input_file, output_file = sys.argv[1:3]
-    preprocess_wiki(input_file, output_file)
+
+    parser = argparse.ArgumentParser(description='Preprocess Wiki dump')
+    parser.add_argument('--input', type=str, default='zhwiki-latest-pages-articles.xml.bz2', help='Wiki dump path')
+    parser.add_argument('--output', type=str, default='zhwiki_tokenized.txt', help='Output file path')
+    args = parser.parse_args()
+    
+    preprocess_wiki(args.input, args.output)
+
+if __name__ == '__main__':
+    main()
