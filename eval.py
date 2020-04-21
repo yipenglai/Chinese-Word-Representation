@@ -10,6 +10,7 @@ import argparse
 import numpy as np
 from fasttext import load_model
 from scipy.stats import spearmanr
+from tqdm import tqdm
 
 def main():
     logging.basicConfig(level=logging.INFO,
@@ -21,13 +22,13 @@ def main():
     parser.add_argument('--task', type=str, default='word_similarity', help='Evaluation task {word_similarity, word_analogy}')
     args = parser.parse_args()
 
-    logging.info('Start evaluation {} on task {}'.format(args.model,
+    logging.info('Start evaluation {} on task {}'.format(args.model_path,
                                                          args.task))
     model = load_model(args.model_path)
     eval_data = open(args.input, 'r')
     pred_score = []
     human_score = []
-    for line in eval_data:
+    for line in tqdm(eval_data):
         w1, w2, human = line.split()
         emb1, emb2 = model[w1], model[w2]
         pred = np.dot(emb1, emb2) / (np.linalg.norm(emb1) * np.linalg.norm(emb2))
