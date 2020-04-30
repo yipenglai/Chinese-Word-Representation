@@ -1,6 +1,4 @@
-'''
-Train skipgram or cbow model using fastText
-'''
+"""Train skipgram or cbow model using fastText"""
 import sys
 import os
 import logging

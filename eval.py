@@ -1,8 +1,4 @@
-'''
-Evaluate learned word representation on
-- Word similarity task
-- Word analogy task
-'''
+# Evaluate learned word representation on word similarity task
 import sys
 import os
 import logging

@@ -1,10 +1,9 @@
-'''
-Preprocess Chinese Wiki data
-a) Convert traditional Chinese to simplified Chinese
-b) Remove non-Chinese words including punctuations and space
-c) Tokenize the text into words
-d) Convert xml into txt file
-'''
+"""Preprocess Chinese Wiki data
+- Convert traditional Chinese to simplified Chinese
+- Remove non-Chinese words including punctuations and space
+- Tokenize the text into words
+- Convert xml into txt file
+"""
 
 import sys
 import os
