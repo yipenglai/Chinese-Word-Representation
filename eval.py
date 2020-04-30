@@ -1,4 +1,4 @@
-# Evaluate learned word representation on word similarity task
+"""Evaluate learned word representation on word similarity task"""
 import sys
 import os
 import logging
@@ -15,7 +15,6 @@ def main():
     parser = argparse.ArgumentParser(description='Evaluate word representations')
     parser.add_argument('--input', type=str, default='wordsim-296.txt', help='Evaluation data path')
     parser.add_argument('--model_path', type=str, default='model.bin', help='Trained model path')
-    parser.add_argument('--task', type=str, default='word_similarity', help='Evaluation task {word_similarity, word_analogy}')
     args = parser.parse_args()
 
     logging.info('Start evaluation {} on task {}'.format(args.model_path,
