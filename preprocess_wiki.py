@@ -1,7 +1,7 @@
 '''
 Preprocess Chinese Wiki data
 a) Convert traditional Chinese to simplified Chinese
-b) Remove punctuations
+b) Remove non-Chinese words including punctuations and space
 c) Tokenize the text into words
 d) Convert xml into txt file
 '''
@@ -12,6 +12,7 @@ import argparse
 import logging
 import wget
 import jieba
+import re
 from gensim.corpora.wikicorpus import WikiCorpus
 from opencc import OpenCC
 from tqdm import tqdm
@@ -29,14 +30,19 @@ def preprocess_wiki(input_file, output_file):
     # Segment the sentences into words using Jieba paddle mode
     jieba.enable_paddle()
 
-    # Process Wiki text and write to the output file
+    # Process Wiki text
     logging.info('Start processing Wiki text')
     output = open(output_file, 'w')
     i = 0
-    for s in tqdm(wiki.get_texts()):
-        raw = ' '.join(s)
-        processed = ' '.join(jieba.cut(cc.convert(raw)))
-        output.write(processed + '\n')
+    for article in tqdm(wiki.get_texts()):
+        raw = ' '.join(article)
+        processed = []
+        # Remove non-Chinese words
+        for token in list(jieba.cut(cc.convert(raw))):
+            matched = re.findall(r'[\u4e00-\u9fff]+', token)
+            if matched:
+                processed.append(matched[0])
+        output.write(' '.join(processed) + '\n')
         i += 1
         if (i % 10000 == 0):
             logging.info('Finished processing {} articles'.format(i))
