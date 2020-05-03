@@ -1,0 +1,3 @@
+[submodule "JWE"]
+	path = JWE
+	url = https://github.com/HKUST-KnowComp/JWE.git
