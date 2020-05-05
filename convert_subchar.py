@@ -10,6 +10,8 @@ import argparse
 import logging
 from tqdm import tqdm
 
+from pywubi import wubi
+
 def convert_radical(s):
     radical = None
     return radical
@@ -19,8 +21,9 @@ def convert_stroke(s):
     return stroke
 
 def convert_wubi(s):
-    wubi = None
-    return wubi
+    wubi_code_list = wubi(s)
+    wubi_code = "".join(wubi_code_list)
+    return wubi_code
 
 def main():
     logging.basicConfig(level=logging.INFO,
