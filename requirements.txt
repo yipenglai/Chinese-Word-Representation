@@ -2,3 +2,4 @@ jieba
 gensim
 tqdm
 OpenCC
+wget
