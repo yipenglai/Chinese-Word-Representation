@@ -36,7 +36,7 @@ def main():
     input = open(args.input, 'r')
     output = open(args.output, 'w')
     i = 0
-    for article in tqdm(eval_data):
+    for article in tqdm(args.input):
         if args.subword == 'radical':
             subword = convert_radical(article)
         elif args.subword == 'stroke':
