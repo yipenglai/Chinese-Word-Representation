@@ -1,5 +1,5 @@
 jieba
 gensim
 tqdm
-OpenCC
+opencc-python-reimplemented
 wget
