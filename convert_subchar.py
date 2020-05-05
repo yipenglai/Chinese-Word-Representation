@@ -21,11 +21,9 @@ def convert_stroke(s):
     return stroke
 
 def convert_wubi(s):
-    embedding_list = wubi(s)
-    embedding = ""
-    for item in embedding_list:
-      embedding+=item
-    return embedding
+    wubi_code_list = wubi(s)
+    wubi_code = "".join(wubi_code_list)
+    return wubi_code
 
 def main():
     logging.basicConfig(level=logging.INFO,
