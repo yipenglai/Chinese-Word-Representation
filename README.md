@@ -18,6 +18,8 @@ After downloading the latest Chinese Wikipedia dump from the link above, run `py
 * Convert xml into txt file
 
 ### Convert Tokenized Wiki Text to Subcharacter Components
+* Convert text to Wubi codes: run `python convert_subchar.py --input zhwiki_tokenized.txt --output zhwiki_wubi.txt --subchar wubi`
+* Convert text to radicals and subcharacter components: run `python convert_subchar.py --input zhwiki_tokenized.txt --output zhwiki_radical.txt --subchar radical`
 
 ### Learn Word Representations
 
