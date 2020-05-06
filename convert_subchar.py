@@ -9,32 +9,26 @@ import os
 import argparse
 import logging
 from tqdm import tqdm
-
-from hanzi_chaizi import HanziChaizi
+from hanzi_chaizi.hanzi_chaizi import HanziChaizi
 from pywubi import wubi
 
 def convert_radical(s):
     hc = HanziChaizi() 
-    radical = []
+    radical_list = []
     for i in s:
         if i == ' ':
-            radical.append(' ')
+            radical_list.append(i)
         else:
             try:
-                radical.append(''.join(str(m) for m in hc.query(i)))
+                radical_list.append(''.join(hc.query(i)))
             except:
-                radical.append(i)       
-    result = ''.join(str(v) for v in radical)
- 
-    return result
-
-def convert_stroke(s):
-    stroke = None
-    return stroke
+                radical_list.append(i)       
+    radical = ''.join(radical_list)
+    return radical
 
 def convert_wubi(s):
     wubi_code_list = wubi(s)
-    wubi_code = "".join(wubi_code_list)
+    wubi_code = ''.join(wubi_code_list)
     return wubi_code
 
 def main():
@@ -44,7 +38,7 @@ def main():
     parser = argparse.ArgumentParser(description='Evaluate word representations')
     parser.add_argument('--input', type=str, default='zhwiki_tokenized.txt', help='Tokenized Wiki file path')
     parser.add_argument('--output', type=str, default='zhwiki_subchar.txt', help='Output file path')
-    parser.add_argument('--subchar', type=str, default='radical', help='Component to be extracted {radical, stroke, wubi}')
+    parser.add_argument('--subchar', type=str, default='radical', help='Component to be extracted {radical, wubi}')
     args = parser.parse_args()
 
     logging.info('Start extracting {} from {}'.format(args.subchar, args.input))
@@ -54,12 +48,10 @@ def main():
     for article in tqdm(input):
         if args.subchar == 'radical':
             subchar = convert_radical(article)
-        elif args.subchar == 'stroke':
-            subchar = convert_stroke(article)
         elif args.subchar == 'wubi':
             subchar = convert_wubi(article)
         else:
-            logging.error('Please enter the correct subcharacter component {radical, stroke, wubi}')
+            logging.error('Please enter the correct subcharacter component {radical, wubi}')
             break
         output.write(subchar + '\n')
         i += 1
