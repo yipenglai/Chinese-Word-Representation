@@ -10,11 +10,23 @@ import argparse
 import logging
 from tqdm import tqdm
 
+from hanzi_chaizi import HanziChaizi
 from pywubi import wubi
 
 def convert_radical(s):
-    radical = None
-    return radical
+    hc = HanziChaizi() 
+    radical = []
+    for i in s:
+        if i == ' ':
+            radical.append(' ')
+        else:
+            try:
+                radical.append(''.join(str(m) for m in hc.query(i)))
+            except:
+                radical.append(i)       
+    result = ''.join(str(v) for v in radical)
+ 
+    return result
 
 def convert_stroke(s):
     stroke = None
