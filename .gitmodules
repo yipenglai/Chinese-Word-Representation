@@ -1,3 +1,6 @@
 [submodule "JWE"]
 	path = JWE
 	url = https://github.com/HKUST-KnowComp/JWE.git
+[submodule "hanzi_chaizi"]
+	path = hanzi_chaizi
+	url = https://github.com/howl-anderson/hanzi_chaizi.git
