@@ -1,3 +1,4 @@
+fasttext
 jieba
 gensim
 tqdm
