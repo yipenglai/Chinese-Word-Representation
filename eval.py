@@ -17,8 +17,7 @@ def main():
     parser.add_argument('--model_path', type=str, default='model.bin', help='Trained model path')
     args = parser.parse_args()
 
-    logging.info('Start evaluation {} on task {}'.format(args.model_path,
-                                                         args.task))
+    logging.info('Start evaluation'.format(args.model_path))
     model = load_model(args.model_path)
     eval_data = open(args.input, 'r')
     pred_score = []
