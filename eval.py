@@ -30,6 +30,8 @@ def main():
         pred_score.append(pred)
     corr = spearmanr(human_score, pred_score)
     logging.info('Finish evaluation. Score = {}'.format(corr))
+    eval_data.close()
+    logging.info('Done')
 
 if __name__ == '__main__':
     main()

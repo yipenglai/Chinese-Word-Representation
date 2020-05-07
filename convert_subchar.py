@@ -57,6 +57,7 @@ def main():
         i += 1
         if (i % 10000 == 0):
             logging.info('Finished processing {} articles'.format(i))
+    input.close()
     output.close()
     logging.info('Done')
 
