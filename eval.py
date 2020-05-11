@@ -7,6 +7,7 @@ import numpy as np
 from fasttext import load_model
 from scipy.stats import spearmanr
 from tqdm import tqdm
+import pandas as pd
 
 from convert_subchar import convert_radical as radical
 from convert_subchar import convert_wubi as wubi
@@ -24,8 +25,9 @@ def main():
     logging.info('Start evaluation for {} data..'.format(args.subchar_type))
     model = load_model(args.model_path)
     eval_data = open(args.input, 'r')
-    pred_score = []
     human_score = []
+    result_list = [] # store (w1, w2, similarity) for error analysis
+
     for line in tqdm(eval_data):
         w1, w2, human = line.split()
         if args.subchar_type == 'wubi':
@@ -36,7 +38,11 @@ def main():
         emb1, emb2 = model[w1], model[w2]
         pred = np.dot(emb1, emb2) / (np.linalg.norm(emb1) * np.linalg.norm(emb2))
         human_score.append(human)
-        pred_score.append(pred)
+        result_list.append((w1, w2, pred))
+
+    result = pd.DataFrame(result_table, columns =['Word_1', 'Word_2', 'Pred_Score']) 
+    result.to_csv('result.txt', sep='\t')
+    pred_score = [i[-1] for i in result_list]
     corr = spearmanr(human_score, pred_score)
     logging.info('Finish evaluation. Score = {}'.format(corr))
     eval_data.close()
