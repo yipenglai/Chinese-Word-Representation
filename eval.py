@@ -40,7 +40,7 @@ def main():
         human_score.append(human)
         result_list.append((w1, w2, pred))
 
-    result = pd.DataFrame(result_table, columns =['Word_1', 'Word_2', 'Pred_Score']) 
+    result = pd.DataFrame(result_list, columns =['Word_1', 'Word_2', 'Pred_Score']) 
     result.to_csv('result.txt', sep='\t')
     pred_score = [i[-1] for i in result_list]
     corr = spearmanr(human_score, pred_score)
