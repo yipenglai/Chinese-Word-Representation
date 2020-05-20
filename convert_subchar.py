@@ -1,7 +1,6 @@
 """Convert Chinese words into subcharacter components including 
-- Radicals
-- Strokes
-- Wubi encoding
+- Graphical components
+- Wubi codes
 """
 
 import sys
@@ -12,19 +11,18 @@ from tqdm import tqdm
 from hanzi_chaizi.hanzi_chaizi import HanziChaizi
 from pywubi import wubi
 
-def convert_radical(s):
-    hc = HanziChaizi() 
-    radical_list = []
+def convert_graphical(s):
+    hc = HanziChaizi()
+    graphical_list = []
     for i in s:
         if i == ' ':
-            radical_list.append(i)
+            graphical_list.append(i)
         else:
             try:
-                radical_list.append(''.join(hc.query(i)))
+                graphical_list.append(''.join(hc.query(i)))
             except:
-                radical_list.append(i)       
-    radical = ''.join(radical_list)
-    return radical
+                graphical_list.append(i)       
+    return ''.join(graphical_list)
 
 def convert_wubi(s):
     wubi_code_list = wubi(s)
@@ -38,7 +36,7 @@ def main():
     parser = argparse.ArgumentParser(description='Evaluate word representations')
     parser.add_argument('--input', type=str, default='zhwiki_tokenized.txt', help='Tokenized Wiki file path')
     parser.add_argument('--output', type=str, default='zhwiki_subchar.txt', help='Output file path')
-    parser.add_argument('--subchar', type=str, default='radical', help='Component to be extracted {radical, wubi}')
+    parser.add_argument('--subchar', type=str, default='wubi', help='Component to be extracted {graphical, wubi}')
     args = parser.parse_args()
 
     logging.info('Start extracting {} from {}'.format(args.subchar, args.input))
@@ -46,12 +44,12 @@ def main():
     output = open(args.output, 'w')
     i = 0
     for article in tqdm(input):
-        if args.subchar == 'radical':
-            subchar = convert_radical(article)
+        if args.subchar == 'graphical':
+            subchar = convert_graphical(article)
         elif args.subchar == 'wubi':
             subchar = convert_wubi(article)
         else:
-            logging.error('Please enter the correct subcharacter component {radical, wubi}')
+            logging.error('Please enter the correct subcharacter component {graphical, wubi}')
             break
         output.write(subchar + '\n')
         i += 1

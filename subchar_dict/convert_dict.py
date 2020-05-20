@@ -25,13 +25,16 @@ def main():
     subchar_list = []
     
     for char, subchar in input.items():
-        # Format character-to-subcharacter dictionary
-        dict_output.write('{} {}\n'.format(char, ' '.join(list(subchar))))
-        # Get all subcharacter components
-        subchar_list += list(subchar)
+        if char != ' ':
+            # Format character-to-subcharacter dictionary
+            dict_output.write('{} {}\n'.format(char, ' '.join(list(subchar))))
+            # Get all subcharacter components
+            subchar_list += list(subchar)
+        else:
+            continue
 
     # Save all unique subcharacter components
-    subchar_output.write(" ".join(set(subchar_list)))
+    subchar_output.write(' '.join(set(subchar_list)))
     dict_output.close()
     subchar_output.close()
     logging.info('Done')
