@@ -18,11 +18,11 @@ def main():
     parser = argparse.ArgumentParser(description='Evaluate word representations')
     parser.add_argument('--input', type=str, default='wordsim-296.txt', help='Evaluation data path')
     parser.add_argument('--model_path', type=str, default='model.bin', help='Trained model path')
-    parser.add_argument('--subchar_type', type=str, default='character', help='Convert evaluation to subcharacters if needed {character, graphical, wubi}')
+    parser.add_argument('--subword', type=str, default='character', help='Convert evaluation to subcharacters if needed {character, graphical, wubi}')
     parser.add_argument('--output', type=str, default='result.txt',help='Path to save the words pairs and their predicted cosine similarity scores')
     args = parser.parse_args()
 
-    logging.info('Start evaluation for {} data..'.format(args.subchar_type))
+    logging.info('Start evaluation for {} data..'.format(args.subword))
     model = load_model(args.model_path)
     eval_data = open(args.input, 'r')
     human_score = []
@@ -30,13 +30,16 @@ def main():
 
     for line in tqdm(eval_data):
         word1, word2, human = line.split()
-        if args.subchar_type == 'wubi':
+        if args.subword == 'wubi':
             w1, w2 = wubi(word1), wubi(word2)
-        elif args.subchar_type == 'graphical':
+        elif args.subword == 'graphical':
             w1, w2 = graphical(word1), graphical(word2)
-        else:
+        elif args.subword == 'character':
             w1, w2 = word1, word2
-        
+        else:
+            logging.error('Please enter the correct subword component {character, graphical, wubi}')
+            break
+        # Compute cosine similarity
         emb1, emb2 = model[w1], model[w2]
         pred = np.dot(emb1, emb2) / (np.linalg.norm(emb1) * np.linalg.norm(emb2))
         human_score.append(human)

@@ -15,9 +15,9 @@ def main():
     parser.add_argument('--model', type=str, default='skipgram', help='Unsupervised fastText model {skipgram, cbow}')
     parser.add_argument('--dim', type=int, default=300, help='Size of word vectors')
     parser.add_argument('--ws', type=int, default=5, help='Size of the context window')
-    parser.add_argument('--epoch', type=int, default=5, help='number of epochs')
-    parser.add_argument('--minn', type=int, default=1, help='Min length of char ngram')
-    parser.add_argument('--maxn', type=int, default=3, help='Max length of char ngram')
+    parser.add_argument('--epoch', type=int, default=5, help='Number of epochs')
+    parser.add_argument('--minn', type=int, default=1, help='Min length of subword ngram')
+    parser.add_argument('--maxn', type=int, default=3, help='Max length of subword ngram')
     args = parser.parse_args()
 
     logging.info('Start training {}'.format(args.model))
